@@ -1,0 +1,9 @@
+[package]
+name = "logcat"
+version = "0.1.0"
+edition = "2021"
+authors = ["Eric Keranen <eric@erickeranen.com>"]
+
+[dependencies]
+anyhow = "1.0"
+chrono = "0.4"
