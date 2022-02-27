@@ -64,6 +64,7 @@ impl ThreadTimeParser {
 impl Parser for ThreadTimeParser {
     fn parse(&mut self, line: &str) -> Result<Message> {
         if line.starts_with('-') {
+            // Usually this is a separator such as: ------ beginning of main.
             bail!("malformed line");
         }
 
