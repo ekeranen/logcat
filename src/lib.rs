@@ -18,12 +18,12 @@
 //! Iterate over all warnings and errors.
 //!
 //! ```
-//! use logcat::{message::Level, parse};
+//! use logcat::parse;
 //!
 //! let source = "...";
 //! for line in source.lines() {
 //!     if let Ok(msg) = parse::threadtime(line) {
-//!         if Level::is_warning_or_higher(msg.level()) {
+//!         if msg.level().is_warning_or_higher() {
 //!             // ...
 //!         }
 //!     }
