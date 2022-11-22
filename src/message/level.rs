@@ -12,34 +12,28 @@ pub enum Level {
 impl Level {
     /// Returns `true` if `Debug`, `Info`, `Warning`, `Error`, or `Fatal`.
     pub fn is_debug_or_higher(self) -> bool {
-        match self {
-            Level::Debug | Level::Info | Level::Warning | Level::Error | Level::Fatal => true,
-            _ => false,
-        }
+        matches!(
+            self,
+            Level::Debug | Level::Info | Level::Warning | Level::Error | Level::Fatal
+        )
     }
 
     /// Returns `true` if `Info`, `Warning`, `Error`, or `Fatal`.
     pub fn is_info_or_higher(self) -> bool {
-        match self {
-            Level::Info | Level::Warning | Level::Error | Level::Fatal => true,
-            _ => false,
-        }
+        matches!(
+            self,
+            Level::Info | Level::Warning | Level::Error | Level::Fatal
+        )
     }
 
     /// Returns `true` if `Warning`, `Error`, or `Fatal`.
     pub fn is_warning_or_higher(self) -> bool {
-        match self {
-            Level::Warning | Level::Error | Level::Fatal => true,
-            _ => false,
-        }
+        matches!(self, Level::Warning | Level::Error | Level::Fatal)
     }
 
     /// Returns `true` if `Error` or `Fatal`.
     pub fn is_error_or_higher(self) -> bool {
-        match self {
-            Level::Error | Level::Fatal => true,
-            _ => false,
-        }
+        matches!(self, Level::Error | Level::Fatal)
     }
 
     /// Returns the short description for this `Level`.
@@ -47,7 +41,7 @@ impl Level {
     /// # Examples
     ///
     /// ```
-    /// use logcat::Level;
+    /// use logcat::message::Level;
     ///
     /// assert_eq!(Level::short(Level::Verbose), "V");
     /// assert_eq!(Level::short(Level::Debug), "D");
@@ -70,7 +64,7 @@ impl Level {
 
 #[cfg(test)]
 mod tests {
-    use crate::Level;
+    use crate::message::Level;
 
     #[test]
     fn level() {

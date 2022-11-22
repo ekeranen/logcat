@@ -18,8 +18,7 @@
 //! Iterate over all warnings and errors.
 //!
 //! ```
-//! use logcat::Level;
-//! use logcat::parse;
+//! use logcat::{message::Level, parse};
 //!
 //! let source = "...";
 //! for line in source.lines() {
@@ -31,7 +30,5 @@
 //! }
 //! ```
 
-pub use message::{Level, Message};
-
-mod message;
+pub mod message;
 pub mod parse;

@@ -176,7 +176,7 @@ impl ThreadTimeParser {
         Ok(chars.as_str())
     }
 
-    fn parse_content<'a>(&mut self, rest: &'a str) -> Result<Message> {
+    fn parse_content(&mut self, rest: &str) -> Result<Message> {
         let year = Local::today().year();
         let datetime = NaiveDate::from_ymd(year, self.msg.month, self.msg.day).and_hms_milli(
             self.msg.hour,
@@ -192,15 +192,14 @@ impl ThreadTimeParser {
             .date_time(datetime)
             .process_id(self.msg.pid)
             .thread_id(self.msg.tid)
-            .build();
+            .build()?;
         Ok(message)
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::parse;
-    use crate::Level;
+    use crate::{message::Level, parse};
     use chrono::{Datelike, Timelike};
 
     #[test]
