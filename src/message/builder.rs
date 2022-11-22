@@ -3,13 +3,15 @@ use chrono::naive::NaiveDateTime;
 use std::cell::RefCell;
 use thiserror::Error;
 
+/// The error type for [`MessageBuilder`] operations.
 #[derive(Debug, Error, Eq, PartialEq)]
 pub enum Error {
+    /// The specified field was not set.
     #[error("field not set: `{0}`")]
     FieldNotSet(&'static str),
 }
 
-/// Builds `Message` in parts.
+/// Builds [`Message`] in parts.
 #[derive(Default)]
 pub struct MessageBuilder {
     // Mandatory
@@ -24,40 +26,50 @@ pub struct MessageBuilder {
 }
 
 impl MessageBuilder {
+    /// Creates a new MessageBuilder.
     pub fn new() -> MessageBuilder {
         MessageBuilder::default()
     }
 
+    /// Sets the required message log level.
     pub fn level(&mut self, value: Level) -> &mut Self {
         *self.level.borrow_mut() = Some(value);
         self
     }
 
+    /// Sets the required message tag.
     pub fn tag(&mut self, value: &str) -> &mut Self {
         *self.tag.borrow_mut() = Some(value.to_owned());
         self
     }
 
+    /// Sets the required message content.
     pub fn content(&mut self, value: &str) -> &mut Self {
         *self.content.borrow_mut() = Some(value.to_owned());
         self
     }
 
+    /// Sets the optional message date and time.
     pub fn date_time(&mut self, value: NaiveDateTime) -> &mut Self {
         *self.date_time.borrow_mut() = Some(value);
         self
     }
 
+    /// Sets the optional message process ID.
     pub fn process_id(&mut self, value: i32) -> &mut Self {
         *self.pid.borrow_mut() = Some(value);
         self
     }
 
+    /// Sets the optional message thread ID.
     pub fn thread_id(&mut self, value: i32) -> &mut Self {
         *self.tid.borrow_mut() = Some(value);
         self
     }
 
+    /// Builds and returns the Message.
+    ///
+    /// An error may be returned if one or more required fields were not set.
     pub fn build(&self) -> Result<Message, Error> {
         // Clone Option<T>s.
         let level = (*self.level.borrow()).ok_or(Error::FieldNotSet("level"))?;

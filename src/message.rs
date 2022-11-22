@@ -5,6 +5,7 @@ pub use builder::{Error, MessageBuilder};
 use chrono::naive::{NaiveDate, NaiveDateTime, NaiveTime};
 pub use level::Level;
 
+/// A log message.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Message {
     level: Level,
