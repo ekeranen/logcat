@@ -124,7 +124,12 @@ mod tests {
             .level(Level::Verbose)
             .tag("tag")
             .content("content")
-            .date_time(NaiveDate::from_ymd(2017, 8, 1).and_hms(7, 30, 0))
+            .date_time(
+                NaiveDate::from_ymd_opt(2017, 8, 1)
+                    .unwrap()
+                    .and_hms_opt(7, 30, 0)
+                    .unwrap(),
+            )
             .process_id(1)
             .thread_id(2)
             .build()

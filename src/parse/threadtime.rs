@@ -177,13 +177,16 @@ impl ThreadTimeParser {
     }
 
     fn parse_content(&mut self, rest: &str) -> Result<Message> {
-        let year = Local::today().year();
-        let datetime = NaiveDate::from_ymd(year, self.msg.month, self.msg.day).and_hms_milli(
-            self.msg.hour,
-            self.msg.minute,
-            self.msg.second,
-            self.msg.millisecond,
-        );
+        let year = Local::now().year();
+        let datetime = NaiveDate::from_ymd_opt(year, self.msg.month, self.msg.day)
+            .context("invalid date")?
+            .and_hms_milli_opt(
+                self.msg.hour,
+                self.msg.minute,
+                self.msg.second,
+                self.msg.millisecond,
+            )
+            .context("invalid time")?;
 
         let message = MessageBuilder::new()
             .level(self.msg.level)
